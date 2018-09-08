@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qfedu.mapper.EventMapper" >
+  <resultMap id="BaseResultMap" type="com.qfedu.domain.Event" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="eventname" property="eventname" jdbcType="VARCHAR" />
+    <result column="eid" property="eid" jdbcType="INTEGER" />
+    <result column="targettime" property="targettime" jdbcType="DATE" />
+    <result column="createtime" property="createtime" jdbcType="DATE" />
+    <result column="repetitions" property="repetitions" jdbcType="INTEGER" />
+    <result column="warntime" property="warntime" jdbcType="DATE" />
+    <result column="top" property="top" jdbcType="INTEGER" />
+    <result column="toptime" property="toptime" jdbcType="TIMESTAMP" />
+    <result column="bgid" property="bgid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.qfedu.domain.Event" extends="BaseResultMap" >
+    <result column="info" property="info" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, uid, eventname, eid, targettime, createtime, repetitions, warntime, top, toptime, 
+    bgid
+  </sql>
+  <sql id="Blob_Column_List" >
+    info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_event
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_event
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qfedu.domain.Event" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_event (uid, eventname, eid, 
+      targettime, new(), repetitions,
+      warntime, top, new(),
+      bgid, info)
+    values (#{uid,jdbcType=INTEGER}, #{eventname,jdbcType=VARCHAR}, #{eid,jdbcType=INTEGER}, 
+      #{targettime,jdbcType=DATE}, #{createtime,jdbcType=DATE}, #{repetitions,jdbcType=INTEGER}, 
+      #{warntime,jdbcType=DATE}, #{top,jdbcType=INTEGER}, #{toptime,jdbcType=TIMESTAMP}, 
+      #{bgid,jdbcType=INTEGER}, #{info,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qfedu.domain.Event" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_event
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="eventname != null" >
+        eventname,
+      </if>
+      <if test="eid != null" >
+        eid,
+      </if>
+      <if test="targettime != null" >
+        targettime,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="repetitions != null" >
+        repetitions,
+      </if>
+      <if test="warntime != null" >
+        warntime,
+      </if>
+      <if test="top != null" >
+        top,
+      </if>
+      <if test="toptime != null" >
+        toptime,
+      </if>
+      <if test="bgid != null" >
+        bgid,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="eventname != null" >
+        #{eventname,jdbcType=VARCHAR},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="targettime != null" >
+        #{targettime,jdbcType=DATE},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="repetitions != null" >
+        #{repetitions,jdbcType=INTEGER},
+      </if>
+      <if test="warntime != null" >
+        #{warntime,jdbcType=DATE},
+      </if>
+      <if test="top != null" >
+        #{top,jdbcType=INTEGER},
+      </if>
+      <if test="toptime != null" >
+        #{toptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bgid != null" >
+        #{bgid,jdbcType=INTEGER},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qfedu.domain.Event" >
+    update t_event
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="eventname != null" >
+        eventname = #{eventname,jdbcType=VARCHAR},
+      </if>
+      <if test="eid != null" >
+        eid = #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="targettime != null" >
+        targettime = #{targettime,jdbcType=DATE},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="repetitions != null" >
+        repetitions = #{repetitions,jdbcType=INTEGER},
+      </if>
+      <if test="warntime != null" >
+        warntime = #{warntime,jdbcType=DATE},
+      </if>
+      <if test="top != null" >
+        top = #{top,jdbcType=INTEGER},
+      </if>
+      <if test="toptime != null" >
+        toptime = #{toptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bgid != null" >
+        bgid = #{bgid,jdbcType=INTEGER},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qfedu.domain.Event" >
+    update t_event
+    set uid = #{uid,jdbcType=INTEGER},
+      eventname = #{eventname,jdbcType=VARCHAR},
+      eid = #{eid,jdbcType=INTEGER},
+      targettime = #{targettime,jdbcType=DATE},
+      createtime = #{createtime,jdbcType=DATE},
+      repetitions = #{repetitions,jdbcType=INTEGER},
+      warntime = #{warntime,jdbcType=DATE},
+      top = #{top,jdbcType=INTEGER},
+      toptime = #{toptime,jdbcType=TIMESTAMP},
+      bgid = #{bgid,jdbcType=INTEGER},
+      info = #{info,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qfedu.domain.Event" >
+    update t_event
+    set uid = #{uid,jdbcType=INTEGER},
+      eventname = #{eventname,jdbcType=VARCHAR},
+      eid = #{eid,jdbcType=INTEGER},
+      targettime = #{targettime,jdbcType=DATE},
+      createtime = #{createtime,jdbcType=DATE},
+      repetitions = #{repetitions,jdbcType=INTEGER},
+      warntime = #{warntime,jdbcType=DATE},
+      top = #{top,jdbcType=INTEGER},
+      toptime = #{toptime,jdbcType=TIMESTAMP},
+      bgid = #{bgid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultType="com.qfedu.domain.Event">
+   select e.* ,et.typename as typename from t_event e left join t_eventtype et on e.eid = et.id and e.uid = #{uid} order by toptime,id ;
+  </select>
+  <select id="selectByTypename" resultType="com.qfedu.domain.Event">
+     select e.* ,et.typename as typename from t_event e left join t_eventtype et on e.eid = et.id =(select et.id from t_eventtype et where et.typename = #{typename}) and e.uid = #{uid} order by toptime,id;
+  </select>
+</mapper>
